@@ -11,4 +11,6 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Imports: 
-    modular
+    modular (>= 0.1.2.9000)
+Remotes:  
+    iqis/modular
