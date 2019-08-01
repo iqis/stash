@@ -35,7 +35,6 @@ stash <- function(object,
 
     },
     parent = environment(),
-    force_public = FALSE,
     lock = FALSE,
     expose_private = TRUE)
 
