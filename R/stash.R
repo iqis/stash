@@ -11,7 +11,7 @@ stash <- function(object,
                   dir_path = tempdir(),
                   file_name = paste0(sample(c(letters, LETTERS, 0:9), 20, TRUE), collapse = "")){
   res <-
-    modular::thing({
+    modular::module({
 
       # Metadata
       file_path <- file.path(dir_path, paste0(file_name, ".Rstash"))
@@ -22,34 +22,41 @@ stash <- function(object,
       saveRDS(object, file_path)
 
       # Data
-      content <- NULL
+      ..content <- NULL
 
       # = Methods =
 
-      load_content <- function() content <<- readRDS(file_path)
-      remove_content <- function() content <<- NULL
-      has_content <- function() !is.null(content)
+      load_content <- function() ..content <<- readRDS(file_path)
+      remove_content <- function() ..content <<- NULL
+      has_content <- function() !is.null(..content)
 
       stash_file_exists <- function() file.exists(file_path)
       remove_stash <- function() if (stash_file_exists()) file.remove(file_path)
 
-    },force_public = TRUE, lock = FALSE)
+    },
+    parent = environment(),
+    force_public = FALSE,
+    lock = FALSE,
+    expose_private = TRUE)
 
-        # `.` Read Data
-      dot_fun <- local(function(){
-        if (has_content()) {
-          return(content)
-        } else if (stash_file_exists()) {
-          return(readRDS(file_path))
-        } else {
-          stop(paste("stash file missing at:\n", file_path))
-        }
-      }, envir = res)
+  # `.` Read Data
+  dot_fun <- local(function(){
+    if (has_content()) {
+      return(..content)
+    } else if (stash_file_exists()) {
+      return(readRDS(file_path))
+    } else {
+      stop(paste("stash file missing at:\n", file_path))
+    }
+  }, envir = res$..pvtenv..)
 
-      makeActiveBinding(".", dot_fun, env = res)
+  makeActiveBinding(".", dot_fun, env = res)
 
-      class(res) <- c("stash_pointer", class(res))
-      res
+  rm(..pvtenv.., envir = res)
+  lockEnvironment(res, bindings = TRUE)
+
+  class(res) <- c("stash_pointer", class(res))
+  res
 }
 
 #' Print Brief Info on a stash_pointer
