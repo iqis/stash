@@ -16,39 +16,75 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/stash)](https://cran.r-project.org/package=stash)
 <!-- badges: end -->
 
 The goal of stash is to ...
 
 ## Installation
 
-You can install the released version of stash from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("stash")
+```{r eval = FALSE}
+devtools::install_github("iqis/stash")
 ```
+
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-library(stash)
-## basic example code
+```{r include = FALSE}
+require(stash)
+require(magrittr)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
+Make a stash. 
+```{r}
+# Make sure the path exists, as right now it would not create one if not found
+mtc_stash <- stash(mtcars)
+mtc_stash
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+This means that mtcars is written into the above location. It is thus exposed that I use Windows. 
 
-You can also embed plots, for example:
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+Access the stash's content with `$.`
+```{r}
+mtc_stash$. %>% head()
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+
+The object also provides access other useful information.
+```{r}
+mtc_stash$obj_class
+mtc_stash$obj_size
+mtc_stash$file_path
+mtc_stash$has_stash_file()
+mtc_stash$has_content()
+```
+
+Currently, as the data set is stashed on to the disc, we don't have a copy in the memory. But we can load it.
+```{r}
+mtc_stash$has_content()
+mtc_stash$load_content()
+mtc_stash$has_content()
+mtc_stash$.
+```
+
+We can also remove the in-memory content to release memory. But we still can read from the disk as in the beginning. 
+```{r}
+mtc_stash$remove_content()
+mtc_stash$has_content()
+```
+
+```{r}
+mtc_stash$.
+```
+
+Finally we can also remove the stash on the disk. If we do this now, we will end with no data anywhere.
+```{r error = TRUE}
+mtc_stash$remove_stash()
+mtc_stash$has_stash_file()
+mtc_stash$.
+```
+
+
+
+
