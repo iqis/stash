@@ -33,8 +33,10 @@ stash <- function(object,
       stash_file_exists <- function() file.exists(file_path)
       remove_stash <- function() if (stash_file_exists()) file.remove(file_path)
 
-      # `.` Read Data
-      makeActiveBinding(".", function(){
+    },force_public = TRUE, lock = FALSE)
+
+        # `.` Read Data
+      dot_fun <- local(function(){
         if (has_content()) {
           return(content)
         } else if (stash_file_exists()) {
@@ -42,11 +44,12 @@ stash <- function(object,
         } else {
           stop(paste("stash file missing at:\n", file_path))
         }
-        }, env = environment())
-    },force_public = TRUE, lock = FALSE)
+      }, envir = res)
 
-  class(res) <- c("stash_pointer", class(res))
-  res
+      makeActiveBinding(".", dot_fun, env = res)
+
+      class(res) <- c("stash_pointer", class(res))
+      res
 }
 
 #' Print Brief Info on a stash_pointer
