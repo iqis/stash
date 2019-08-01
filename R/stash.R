@@ -23,8 +23,6 @@ stash <- function(object,
 
       # = Methods =
 
-      stash_file_exists <- function() file.exists(file_path)
-
       # `.` Read Data
       makeActiveBinding(".", function(){
         if (!stash_file_exists()){
@@ -34,8 +32,13 @@ stash <- function(object,
         }
       }, env = environment())
 
+      stash_file_exists <- function() file.exists(file_path)
       clear_stash <- function() if (stash_file_exists()) file.remove(file_path)
-    })
+
+    },
+    lock = FALSE,
+    force_public = TRUE)
+
 
   class(res) <- c("stash_pointer", class(res))
   res
