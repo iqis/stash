@@ -21,24 +21,29 @@ stash <- function(object,
       # Dump Stash
       saveRDS(object, file_path)
 
+      # Data
+      content <- NULL
+
       # = Methods =
+
+      load_content <- function() content <<- readRDS(file_path)
+      remove_content <- function() content <<- NULL
+      has_content <- function() !is.null(content)
+
+      stash_file_exists <- function() file.exists(file_path)
+      remove_stash <- function() if (stash_file_exists()) file.remove(file_path)
 
       # `.` Read Data
       makeActiveBinding(".", function(){
-        if (!stash_file_exists()){
-          stop(paste("stash file missing at:\n", file_path))
+        if (has_content()) {
+          return(content)
+        } else if (stash_file_exists()) {
+          return(readRDS(file_path))
         } else {
-          readRDS(file_path)
+          stop(paste("stash file missing at:\n", file_path))
         }
-      }, env = environment())
-
-      stash_file_exists <- function() file.exists(file_path)
-      clear_stash <- function() if (stash_file_exists()) file.remove(file_path)
-
-    },
-    lock = FALSE,
-    force_public = TRUE)
-
+        }, env = environment())
+    },force_public = TRUE, lock = FALSE)
 
   class(res) <- c("stash_pointer", class(res))
   res
