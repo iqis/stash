@@ -42,8 +42,7 @@ stash <- function(object,
       } else {
         stop(paste("stash file missing at:\n", file_path))
       }
-    },
-    parent = environment())
+    })
 
   class(res) <- c("stash_pointer", class(res))
   res
