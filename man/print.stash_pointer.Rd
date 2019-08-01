@@ -4,10 +4,12 @@
 \alias{print.stash_pointer}
 \title{Print Brief Info on a stash_pointer}
 \usage{
-\method{print}{stash_pointer}(x)
+\method{print}{stash_pointer}(x, ...)
 }
 \arguments{
-\item{x}{}
+\item{x}{object}
+
+\item{...}{dot-dot-dot}
 }
 \description{
 Print Brief Info on a stash_pointer

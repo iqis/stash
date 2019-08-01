@@ -15,7 +15,7 @@ stash <- function(object,
 
       # Metadata
       file_path <- file.path(dir_path, paste0(file_name, ".Rstash"))
-      obj_size <- object.size(object)
+      obj_size <- utils::object.size(object)
       obj_class <-  class(object)
 
       # Dump Stash
@@ -50,19 +50,20 @@ stash <- function(object,
 
 #' Print Brief Info on a stash_pointer
 #'
-#' @param x
+#' @param x object
+#' @param ... dot-dot-dot
 #'
 #' @return NULL
 #' @export
 #'
-print.stash_pointer <- function(x){
+print.stash_pointer <- function(x, ...){
   cat(paste0("<stash_pointer>", " `", x$obj_class[1],"` ", x$obj_size, "\n"))
   cat("- ", paste(x$file_path))
 }
 
 #' Test if an Object is a stash_pointer
 #'
-#' @param x
+#' @param x object
 #'
 #' @return Logical
 #' @export

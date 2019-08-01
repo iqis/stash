@@ -7,7 +7,7 @@
 is_stash_pointer(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{object}
 }
 \value{
 Logical
