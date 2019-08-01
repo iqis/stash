@@ -30,14 +30,14 @@ stash <- function(object,
       remove_content <- function() ..content <<- NULL
       has_content <- function() !is.null(..content)
 
-      stash_file_exists <- function() file.exists(file_path)
-      remove_stash <- function() if (stash_file_exists()) file.remove(file_path)
+      has_stash_file <- function() file.exists(file_path)
+      remove_stash <- function() if (has_stash_file()) file.remove(file_path)
 
     },
     dot = function(){
       if (has_content()) {
         return(..content)
-      } else if (stash_file_exists()) {
+      } else if (has_stash_file()) {
         return(readRDS(file_path))
       } else {
         stop(paste("stash file missing at:\n", file_path))
