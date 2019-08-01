@@ -11,7 +11,7 @@ stash <- function(object,
                   dir_path = tempdir(),
                   file_name = paste0(sample(c(letters, LETTERS, 0:9), 20, TRUE), collapse = "")){
   res <-
-    modular::module({
+    modular::thing({
 
       # Metadata
       file_path <- file.path(dir_path, paste0(file_name, ".Rstash"))
@@ -34,25 +34,16 @@ stash <- function(object,
       remove_stash <- function() if (stash_file_exists()) file.remove(file_path)
 
     },
-    parent = environment(),
-    lock = FALSE,
-    expose_private = TRUE)
-
-  # `.` Read Data
-  dot_fun <- local(function(){
-    if (has_content()) {
-      return(..content)
-    } else if (stash_file_exists()) {
-      return(readRDS(file_path))
-    } else {
-      stop(paste("stash file missing at:\n", file_path))
-    }
-  }, envir = res$..pvtenv..)
-
-  makeActiveBinding(".", dot_fun, env = res)
-
-  rm(..pvtenv.., envir = res)
-  lockEnvironment(res, bindings = TRUE)
+    dot = function(){
+      if (has_content()) {
+        return(..content)
+      } else if (stash_file_exists()) {
+        return(readRDS(file_path))
+      } else {
+        stop(paste("stash file missing at:\n", file_path))
+      }
+    },
+    parent = environment())
 
   class(res) <- c("stash_pointer", class(res))
   res
