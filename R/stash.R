@@ -4,7 +4,7 @@
 #' @param dir_path path to a directory;character string
 #' @param file_name name of the stash file
 #'
-#' @return a stash_pointer obj
+#' @return a stash_ref obj
 #' @export
 #'
 stash <- function(object,
@@ -44,11 +44,16 @@ stash <- function(object,
       }
     })
 
-  class(res) <- c("stash_pointer", class(res))
+  class(res) <- c("stash_ref", class(res))
   res
 }
 
-#' Print Brief Info on a stash_pointer
+#' @export
+`[.stash_ref` <- function(x, ...){
+  x$.
+}
+
+#' Print Brief Info on a stash_ref
 #'
 #' @param x object
 #' @param ... dot-dot-dot
@@ -56,18 +61,18 @@ stash <- function(object,
 #' @return NULL
 #' @export
 #'
-print.stash_pointer <- function(x, ...){
-  cat(paste0("<stash_pointer>", " `", x$obj_class[1],"` ", x$obj_size, "\n"))
+print.stash_ref <- function(x, ...){
+  cat(paste0("<stash_ref>", " `", x$obj_class[1],"` ", x$obj_size, "\n"))
   cat("- ", paste(x$file_path))
 }
 
-#' Test if an Object is a stash_pointer
+#' Test if an Object is a stash_ref
 #'
 #' @param x object
 #'
 #' @return Logical
 #' @export
 #'
-is_stash_pointer <- function(x){
-  inherits(x, "stash_pointer")
+is_stash_ref <- function(x){
+  inherits(x, "stash_ref")
 }
