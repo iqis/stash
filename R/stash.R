@@ -48,10 +48,6 @@ stash <- function(object,
   res
 }
 
-#' @export
-`[.stash_ref` <- function(x, ...){
-  x$.
-}
 
 #' Print Brief Info on a stash_ref
 #'
