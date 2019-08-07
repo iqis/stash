@@ -17,7 +17,9 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/stash)](https://cran.r-project.org/package=stash)
 <!-- badges: end -->
 
-The goal of stash is to …
+Creates a cache in binary in the file system for any R object, returning
+a reference to the cache file. This is useful if have many R objects to
+deal with, an cannot fit them all at once in your memory.
 
 ## Installation
 
@@ -34,16 +36,16 @@ Make a stash.
 mtc_stash <- stash(mtcars)
 mtc_stash
 #> <stash_ref> `data.frame` 7208
-#> -  C:\Users\Siqi\AppData\Local\Temp\RtmpOM1Eyc/qKWL6tsLsTwDSeaeGZfU.Rstash
+#> -  C:\Users\Siqi\AppData\Local\Temp\Rtmp8OK55Q/ryl7U3MOcHsL7ZsT8lim.Rstash
 ```
 
-This means that mtcars is written into the above location. It is thus
-exposed that I use Windows.
+This means that mtcars is written into the above location. (It is also
+thus exposed that I use Windows.)
 
-Access the stash’s content with `$.`
+Access the stash’s content with an empty `[]`.
 
 ``` r
-mtc_stash$. %>% head()
+mtc_stash[] %>% head()
 #>                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 #> Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
 #> Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
@@ -51,6 +53,15 @@ mtc_stash$. %>% head()
 #> Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
 #> Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 #> Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+```
+
+If you need to do any subsetting, you may chain `[]` or `$` right after.
+
+``` r
+mtc_stash[][1:5, "mpg"]
+#> [1] 21.0 21.0 22.8 21.4 18.7
+mean(mtc_stash[]$cyl)
+#> [1] 6.1875
 ```
 
 The object also provides access other useful information.
@@ -61,7 +72,7 @@ mtc_stash$obj_class
 mtc_stash$obj_size
 #> 7208 bytes
 mtc_stash$file_path
-#> [1] "C:\\Users\\Siqi\\AppData\\Local\\Temp\\RtmpOM1Eyc/qKWL6tsLsTwDSeaeGZfU.Rstash"
+#> [1] "C:\\Users\\Siqi\\AppData\\Local\\Temp\\Rtmp8OK55Q/ryl7U3MOcHsL7ZsT8lim.Rstash"
 mtc_stash$has_stash_file()
 #> [1] TRUE
 mtc_stash$has_content()
@@ -77,7 +88,7 @@ mtc_stash$has_content()
 mtc_stash$load_content()
 mtc_stash$has_content()
 #> [1] TRUE
-mtc_stash$.
+mtc_stash[]
 #>                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #> Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 #> Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
@@ -123,7 +134,7 @@ mtc_stash$has_content()
 ```
 
 ``` r
-mtc_stash$.
+mtc_stash[]
 #>                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #> Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 #> Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
@@ -167,7 +178,7 @@ mtc_stash$remove_stash()
 #> [1] TRUE
 mtc_stash$has_stash_file()
 #> [1] FALSE
-mtc_stash$.
+mtc_stash[]
 #> Error in (function () : stash file missing at:
-#>  C:\Users\Siqi\AppData\Local\Temp\RtmpOM1Eyc/qKWL6tsLsTwDSeaeGZfU.Rstash
+#>  C:\Users\Siqi\AppData\Local\Temp\Rtmp8OK55Q/ryl7U3MOcHsL7ZsT8lim.Rstash
 ```

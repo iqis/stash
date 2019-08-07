@@ -14,4 +14,5 @@ Imports:
 Remotes: 
     iqis/mod
 Suggests: 
-    covr
+    covr,
+    testthat (>= 2.1.0)

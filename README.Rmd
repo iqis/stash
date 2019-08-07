@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/stash)](https://cran.r-project.org/package=stash)
 <!-- badges: end -->
 
-The goal of stash is to ...
+Creates a cache in binary in the file system for any R object, returning a reference to the cache file. This is useful if have many R objects to deal with, an cannot fit them all at once in your memory. 
 
 ## Installation
 
@@ -45,12 +45,18 @@ mtc_stash <- stash(mtcars)
 mtc_stash
 ```
 
-This means that mtcars is written into the above location. It is thus exposed that I use Windows. 
+This means that mtcars is written into the above location. (It is also thus exposed that I use Windows.)
 
 
-Access the stash's content with `$.`
+Access the stash's content with an empty `[]`.
 ```{r}
-mtc_stash$. %>% head()
+mtc_stash[] %>% head()
+```
+
+If you need to do any subsetting, you may chain `[]` or `$` right after.
+```{r}
+mtc_stash[][1:5, "mpg"]
+mean(mtc_stash[]$cyl)
 ```
 
 
@@ -68,7 +74,7 @@ Currently, as the data set is stashed on to the disc, we don't have a copy in th
 mtc_stash$has_content()
 mtc_stash$load_content()
 mtc_stash$has_content()
-mtc_stash$.
+mtc_stash[]
 ```
 
 We can also remove the in-memory content to release memory. But we still can read from the disk as in the beginning. 
@@ -78,14 +84,14 @@ mtc_stash$has_content()
 ```
 
 ```{r}
-mtc_stash$.
+mtc_stash[]
 ```
 
 Finally we can also remove the stash on the disk. If we do this now, we will end with no data anywhere.
 ```{r error = TRUE}
 mtc_stash$remove_stash()
 mtc_stash$has_stash_file()
-mtc_stash$.
+mtc_stash[]
 ```
 
 
