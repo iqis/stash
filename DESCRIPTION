@@ -11,5 +11,7 @@ LazyData: true
 RoxygenNote: 6.1.1
 Imports: 
     mod (>= 0.1.3)
-Remotes:  
+Remotes: 
     iqis/mod
+Suggests: 
+    covr
