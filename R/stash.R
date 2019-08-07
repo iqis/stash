@@ -11,7 +11,7 @@ stash <- function(object,
                   dir_path = tempdir(),
                   file_name = paste0(sample(c(letters, LETTERS, 0:9), 20, TRUE), collapse = "")){
   res <-
-    modular::thing({
+    mod::thing({
 
       # Metadata
       file_path <- file.path(dir_path, paste0(file_name, ".Rstash"))
