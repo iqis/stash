@@ -9,6 +9,8 @@
 status](https://ci.appveyor.com/api/projects/status/github/iqis/stash?branch=master&svg=true)](https://ci.appveyor.com/project/iqis/stash)
 [![Travis build
 status](https://travis-ci.org/iqis/stash.svg?branch=master)](https://travis-ci.org/iqis/stash)
+[![Codecov test
+coverage](https://codecov.io/gh/iqis/stash/branch/master/graph/badge.svg)](https://codecov.io/gh/iqis/stash?branch=master)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
@@ -32,7 +34,7 @@ Make a stash.
 mtc_stash <- stash(mtcars)
 mtc_stash
 #> <stash_ref> `data.frame` 7208
-#> -  C:\Users\Siqi\AppData\Local\Temp\RtmpYDjbSk/Bzbl3hIRSEtzUA2AYa3C.Rstash
+#> -  C:\Users\Siqi\AppData\Local\Temp\RtmpOM1Eyc/qKWL6tsLsTwDSeaeGZfU.Rstash
 ```
 
 This means that mtcars is written into the above location. It is thus
@@ -59,7 +61,7 @@ mtc_stash$obj_class
 mtc_stash$obj_size
 #> 7208 bytes
 mtc_stash$file_path
-#> [1] "C:\\Users\\Siqi\\AppData\\Local\\Temp\\RtmpYDjbSk/Bzbl3hIRSEtzUA2AYa3C.Rstash"
+#> [1] "C:\\Users\\Siqi\\AppData\\Local\\Temp\\RtmpOM1Eyc/qKWL6tsLsTwDSeaeGZfU.Rstash"
 mtc_stash$has_stash_file()
 #> [1] TRUE
 mtc_stash$has_content()
@@ -167,5 +169,5 @@ mtc_stash$has_stash_file()
 #> [1] FALSE
 mtc_stash$.
 #> Error in (function () : stash file missing at:
-#>  C:\Users\Siqi\AppData\Local\Temp\RtmpYDjbSk/Bzbl3hIRSEtzUA2AYa3C.Rstash
+#>  C:\Users\Siqi\AppData\Local\Temp\RtmpOM1Eyc/qKWL6tsLsTwDSeaeGZfU.Rstash
 ```
