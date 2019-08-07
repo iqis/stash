@@ -29,14 +29,21 @@ devtools::install_github("iqis/stash")
 
 ## Example
 
+``` r
+require(stash)
+#> Loading required package: stash
+require(magrittr)
+#> Loading required package: magrittr
+#> Warning: package 'magrittr' was built under R version 3.6.1
+```
+
 Make a stash.
 
 ``` r
-# Make sure the path exists, as right now it would not create one if not found
 mtc_stash <- stash(mtcars)
 mtc_stash
 #> <stash_ref> `data.frame` 7208
-#> -  C:\Users\Siqi\AppData\Local\Temp\Rtmp8OK55Q/ryl7U3MOcHsL7ZsT8lim.Rstash
+#> -  C:\Users\Siqi\AppData\Local\Temp\RtmpEvAe8m/BzoITACXhmiSxcrArgHd.Rstash
 ```
 
 This means that mtcars is written into the above location. (It is also
@@ -72,7 +79,7 @@ mtc_stash$obj_class
 mtc_stash$obj_size
 #> 7208 bytes
 mtc_stash$file_path
-#> [1] "C:\\Users\\Siqi\\AppData\\Local\\Temp\\Rtmp8OK55Q/ryl7U3MOcHsL7ZsT8lim.Rstash"
+#> [1] "C:\\Users\\Siqi\\AppData\\Local\\Temp\\RtmpEvAe8m/BzoITACXhmiSxcrArgHd.Rstash"
 mtc_stash$has_stash_file()
 #> [1] TRUE
 mtc_stash$has_content()
@@ -180,5 +187,5 @@ mtc_stash$has_stash_file()
 #> [1] FALSE
 mtc_stash[]
 #> Error in (function () : stash file missing at:
-#>  C:\Users\Siqi\AppData\Local\Temp\Rtmp8OK55Q/ryl7U3MOcHsL7ZsT8lim.Rstash
+#>  C:\Users\Siqi\AppData\Local\Temp\RtmpEvAe8m/BzoITACXhmiSxcrArgHd.Rstash
 ```

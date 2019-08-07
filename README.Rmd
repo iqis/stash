@@ -33,14 +33,13 @@ devtools::install_github("iqis/stash")
 
 ## Example
 
-```{r include = FALSE}
+```{r include = TRUE}
 require(stash)
 require(magrittr)
 ```
 
 Make a stash. 
 ```{r}
-# Make sure the path exists, as right now it would not create one if not found
 mtc_stash <- stash(mtcars)
 mtc_stash
 ```
