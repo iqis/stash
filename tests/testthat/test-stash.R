@@ -1,7 +1,7 @@
 library(stash)
 test_that("stash() works", {
   mtc_stash <- stash(mtcars)
-  expect_invisible(print(mtc_stash))
+  print(mtc_stash)
   expect_true(is_stash_ref(mtc_stash))
   expect_false(mtc_stash$has_content())
   expect_identical(mtc_stash[], mtcars)
